@@ -1,0 +1,137 @@
+$colorDark: hsl(0, 0%, 13%);
+$colorGray: hsl(30, 10%, 92%);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: $colorDark;
+}
+
+.weather-widget {
+  width: 220px;
+  border: 1px solid $colorGray;
+
+  &__card {
+    margin: 4px 4px 24px 4px;
+  }
+
+  &__card:last-child {
+    margin-bottom: 4px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+  }
+
+  &__title {
+    font-weight: bold;
+  }
+
+  &__header-icon {
+    width: 18px;
+  }
+
+  &__main-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__weather-icon {
+    flex: 1;
+  }
+
+  &__temperature {
+    flex: 1;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  &__description {
+    margin-bottom: 4px;
+  }
+
+  &__details {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__detail {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    padding: 8px 4px 0 0;
+  }
+
+  &__detail-icon {
+    width: 18px;
+    margin-right: 4px;
+  }
+
+  &__location {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    margin-bottom: 12px;
+    background-color: $colorGray;
+  }
+
+  &__location:last-child {
+    margin-bottom: 0;
+  }
+
+  &__location-icon {
+    width: 18px;
+    margin-right: 4px;
+  }
+
+  &__location-name {
+    flex-grow: 1;
+  }
+
+  &__location-button {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+  }
+
+  &__location-button-icon {
+    width: 18px;
+  }
+
+  &__add-location-form {
+    display: flex;
+    height: 28px;
+  }
+
+  &__add-location-input {
+    flex-grow: 1;
+  }
+
+  &__add-location-button {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+  }
+
+  &__add-location-button-icon {
+    width: 18px;
+  }
+}

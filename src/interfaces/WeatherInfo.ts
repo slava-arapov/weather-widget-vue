@@ -1,0 +1,19 @@
+export interface WeatherInfo {
+  name: string;
+  summary: string;
+  icon: string;
+  temperatureUnits: string;
+  speedUnits: string;
+  distanceUnits: string;
+  pressureUnits: string;
+  temperature: number;
+  temperatureFeelsLike: number;
+  cloudsDescription: string;
+  windSpeedDescription: string;
+  windSpeed: number;
+  windDirection: number;
+  pressure: number;
+  humidity: number;
+  dewPoint: number;
+  visibility: number;
+}
