@@ -93,7 +93,7 @@ export default defineComponent({
       };
     },
     formattedVisibility() {
-      return this.weatherInfo.visibility.toFixed(1);
+      return (this.weatherInfo.visibility / 1000).toFixed(1);
     },
   },
   components: {

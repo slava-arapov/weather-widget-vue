@@ -76,10 +76,10 @@ export const getWeatherData = (): WeatherInfo => {
     ),
     pressure: openWeatherMapResponse.main.pressure,
     humidity: openWeatherMapResponse.main.humidity,
-    visibility: 10.0, // TODO Calculate visibility
     dewPoint: getDewPoint(
       openWeatherMapResponse.main.temp,
       openWeatherMapResponse.main.humidity
     ),
+    visibility: openWeatherMapResponse.visibility,
   };
 };
