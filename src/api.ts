@@ -1,4 +1,5 @@
 import { OpenWeatherMapResponse } from "@/interfaces/OpenWeatherMapResponse";
+import { getCloudsConditionName } from "@/helpers/cloudsCondition";
 import { getDewPoint } from "@/helpers/dewPoint";
 import { getWindCardinalDirection } from "@/helpers/windCardinalDirection";
 import { WeatherInfo } from "@/interfaces/WeatherInfo";
@@ -63,9 +64,11 @@ export const getWeatherData = (): WeatherInfo => {
     distanceUnits: "km",
     pressureUnits: "hPa",
     temperature: Math.round(openWeatherMapResponse.main.temp),
-    cloudsDescription: "broken clouds", // TODO Get description by %
     windSpeedDescription: "light breeze", // TODO Get description by speed
     temperatureFeelsLike: Math.round(openWeatherMapResponse.main.feels_like),
+    cloudsDescription: getCloudsConditionName(
+      openWeatherMapResponse.clouds.all
+    ),
     windSpeed: openWeatherMapResponse.wind.speed,
     windDirection: openWeatherMapResponse.wind.deg,
     windCardinalDirection: getWindCardinalDirection(
