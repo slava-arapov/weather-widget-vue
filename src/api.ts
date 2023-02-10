@@ -1,5 +1,6 @@
 import { OpenWeatherMapResponse } from "@/interfaces/OpenWeatherMapResponse";
-import { WeatherInfo } from "./interfaces/WeatherInfo";
+import { getDewPoint } from "@/helpers/dewPoint";
+import { WeatherInfo } from "@/interfaces/WeatherInfo";
 
 export const getOpenWeatherMapResponse = (): OpenWeatherMapResponse =>
   JSON.parse(` {
@@ -68,7 +69,10 @@ export const getWeatherData = (): WeatherInfo => {
     windDirection: openWeatherMapResponse.wind.deg,
     pressure: openWeatherMapResponse.main.pressure,
     humidity: openWeatherMapResponse.main.humidity,
-    dewPoint: 0, // TODO Calculate Dew Point
     visibility: 10.0, // TODO Calculate visibility
+    dewPoint: getDewPoint(
+      openWeatherMapResponse.main.temp,
+      openWeatherMapResponse.main.humidity
+    ),
   };
 };
