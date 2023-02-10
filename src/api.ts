@@ -1,5 +1,6 @@
 import { OpenWeatherMapResponse } from "@/interfaces/OpenWeatherMapResponse";
 import { getDewPoint } from "@/helpers/dewPoint";
+import { getWindCardinalDirection } from "@/helpers/windCardinalDirection";
 import { WeatherInfo } from "@/interfaces/WeatherInfo";
 
 export const getOpenWeatherMapResponse = (): OpenWeatherMapResponse =>
@@ -67,6 +68,9 @@ export const getWeatherData = (): WeatherInfo => {
     temperatureFeelsLike: Math.round(openWeatherMapResponse.main.feels_like),
     windSpeed: openWeatherMapResponse.wind.speed,
     windDirection: openWeatherMapResponse.wind.deg,
+    windCardinalDirection: getWindCardinalDirection(
+      openWeatherMapResponse.wind.deg
+    ),
     pressure: openWeatherMapResponse.main.pressure,
     humidity: openWeatherMapResponse.main.humidity,
     visibility: 10.0, // TODO Calculate visibility

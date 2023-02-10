@@ -17,6 +17,7 @@ describe("WeatherLocation.vue", () => {
       windSpeedDescription: "light breeze",
       windSpeed: 0.62,
       windDirection: 349,
+      windCardinalDirection: "SW",
       pressure: 1015,
       humidity: 64,
       dewPoint: 0,

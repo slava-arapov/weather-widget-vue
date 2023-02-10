@@ -12,6 +12,7 @@ export interface WeatherInfo {
   windSpeedDescription: string;
   windSpeed: number;
   windDirection: number;
+  windCardinalDirection: string;
   pressure: number;
   humidity: number;
   dewPoint: number;

@@ -24,7 +24,8 @@
           class="weather-widget__detail-icon"
           :style="windDirectionIconStyle"
         />
-        {{ weatherInfo.windSpeed }}{{ weatherInfo.speedUnits }}
+        {{ weatherInfo.windSpeed }}{{ weatherInfo.speedUnits }},
+        {{ weatherInfo.windCardinalDirection }}
       </div>
       <div class="weather-widget__detail">
         <font-awesome-icon
