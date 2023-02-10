@@ -13,7 +13,10 @@
         />
         <div class="weather-widget__location-name">{{ location.name }}</div>
 
-        <button class="weather-widget__remove-location-button">
+        <button
+          class="weather-widget__remove-location-button"
+          @click="remove(location)"
+        >
           <font-awesome-icon
             :icon="faTrashCan"
             class="weather-widget__remove-location-button-icon"
@@ -53,6 +56,13 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: {
+    remove(payload: WeatherInfo) {
+      if (payload) return true;
+
+      return false;
+    },
+  },
   data() {
     return {
       faBars,
@@ -60,6 +70,11 @@ export default defineComponent({
       faTrashCan,
       faPlus,
     };
+  },
+  methods: {
+    remove(location: WeatherInfo) {
+      this.$emit("remove", location);
+    },
   },
   components: {
     FontAwesomeIcon,

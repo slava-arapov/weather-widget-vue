@@ -5,7 +5,11 @@
       @close="closeSettings"
       @open="openSettings"
     />
-    <weather-settings :locations="locations" v-show="inSettingsMode" />
+    <weather-settings
+      :locations="locations"
+      v-show="inSettingsMode"
+      @remove="(location) => remove(location)"
+    />
     <weather-location
       v-for="location of locations"
       v-show="!inSettingsMode"
@@ -56,6 +60,9 @@ export default defineComponent({
     },
     closeSettings() {
       this.inSettingsMode = false;
+    },
+    remove(location: WeatherInfo) {
+      this.locations = this.locations.filter((item) => item !== location);
     },
   },
 });
