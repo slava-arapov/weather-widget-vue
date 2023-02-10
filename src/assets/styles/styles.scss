@@ -1,6 +1,28 @@
 $colorDark: hsl(0, 0%, 13%);
 $colorGray: hsl(30, 10%, 92%);
 
+$smallIconSize: 18px;
+$mediumIconSize: 18px;
+
+@mixin transparent-button {
+  background-color: transparent;
+  border: none;
+}
+
+@mixin centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin highlight-on-hover {
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -14,6 +36,22 @@ $colorGray: hsl(30, 10%, 92%);
 .weather-widget {
   width: 220px;
   border: 1px solid $colorGray;
+  position: relative;
+
+  &__settings-button {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    @include transparent-button;
+    @include centered-content;
+    @include highlight-on-hover;
+  }
+
+  &__settings-button-icon {
+    width: 18px;
+  }
 
   &__card {
     margin: 4px 4px 24px 4px;
@@ -23,19 +61,9 @@ $colorGray: hsl(30, 10%, 92%);
     margin-bottom: 4px;
   }
 
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 32px;
-  }
-
   &__title {
+    margin: 14px 0 16px 0;
     font-weight: bold;
-  }
-
-  &__header-icon {
-    width: 18px;
   }
 
   &__main-info {
@@ -55,7 +83,7 @@ $colorGray: hsl(30, 10%, 92%);
     font-weight: bold;
   }
 
-  &__description {
+  &__additional-info {
     margin-bottom: 4px;
   }
 
@@ -89,6 +117,13 @@ $colorGray: hsl(30, 10%, 92%);
     margin-bottom: 0;
   }
 
+  &__location-button {
+    width: 24px;
+    height: 24px;
+    @include transparent-button;
+    @include centered-content;
+  }
+
   &__location-icon {
     width: 18px;
     margin-right: 4px;
@@ -98,18 +133,23 @@ $colorGray: hsl(30, 10%, 92%);
     flex-grow: 1;
   }
 
-  &__location-button {
-    width: 28px;
-    height: 28px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    border: none;
-  }
-
   &__location-button-icon {
     width: 18px;
+    opacity: 0.8;
+  }
+
+  &__location-button-icon:hover {
+    opacity: 1;
+  }
+
+  &__remove-location-button {
+    @include transparent-button;
+    @include centered-content();
+    @include highlight-on-hover;
+  }
+
+  &__remove-location-button-icon {
+    width: 14px;
   }
 
   &__add-location-form {
@@ -124,11 +164,8 @@ $colorGray: hsl(30, 10%, 92%);
   &__add-location-button {
     width: 28px;
     height: 28px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    border: none;
+    @include transparent-button;
+    @include centered-content;
   }
 
   &__add-location-button-icon {

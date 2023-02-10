@@ -1,9 +1,6 @@
 <template>
   <article class="weather-widget__card">
-    <header class="weather-widget__header">
-      <h2 class="weather-widget__title">Settings</h2>
-      <font-awesome-icon :icon="faXmark" class="weather-widget__header-icon" />
-    </header>
+    <h2 class="weather-widget__title">Settings</h2>
     <div class="weather-widget__locations">
       <div
         v-for="location in locations"
@@ -16,17 +13,15 @@
         />
         <div class="weather-widget__location-name">{{ location.name }}</div>
 
-        <button class="weather-widget__location-button">
+        <button class="weather-widget__remove-location-button">
           <font-awesome-icon
             :icon="faTrashCan"
-            class="weather-widget__location-button-icon"
+            class="weather-widget__remove-location-button-icon"
           />
         </button>
       </div>
     </div>
-    <header class="weather-widget__header">
-      <h2 class="weather-widget__title">Add Location:</h2>
-    </header>
+    <h2 class="weather-widget__title">Add Location:</h2>
     <div class="weather-widget__add-location-form">
       <input type="text" class="weather-widget__add-location-input" />
       <button class="weather-widget__add-location-button">

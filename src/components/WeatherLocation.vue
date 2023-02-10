@@ -1,11 +1,8 @@
 <template>
   <article class="weather-widget__card" v-if="weatherInfo">
-    <header class="weather-widget__header">
-      <h2 class="weather-widget__title">
-        {{ weatherInfo.name }}
-      </h2>
-      <font-awesome-icon :icon="faGear" class="weather-widget__header-icon" />
-    </header>
+    <h2 class="weather-widget__title">
+      {{ weatherInfo.name }}
+    </h2>
     <div class="weather-widget__main-info">
       <div class="weather-widget__weather-icon">
         <img :src="weatherInfo.icon" :alt="weatherInfo.summary" />
@@ -14,7 +11,7 @@
         {{ weatherInfo.temperature }}{{ weatherInfo.temperatureUnits }}
       </div>
     </div>
-    <p class="weather-widget__description">
+    <p class="weather-widget__additional-info">
       {{ feelsLikePhrase }}. {{ cloudsPhrase }}. {{ windPhrase }}.
     </p>
     <div class="weather-widget__details">
