@@ -36,10 +36,19 @@ export default defineComponent({
       inSettingsMode: false,
     };
   },
-  mounted() {
-    // Two stub locations
-    this.locations = [...this.locations, getWeatherData()];
-    this.locations = [...this.locations, getWeatherData()];
+  async mounted() {
+    // const CITY_NAME = 'London';
+    const LON_LONDON = -0.12574;
+    const LAT_LONDON = 51.50853;
+
+    // const CITY_NAME = 'Moscow';
+    const LON_MOSCOW = 37.615;
+    const LAT_MOSCOW = 55.752;
+
+    const londonInfo = await getWeatherData(LON_LONDON, LAT_LONDON);
+    const moscowInfo = await getWeatherData(LON_MOSCOW, LAT_MOSCOW);
+
+    this.locations = [...this.locations, londonInfo, moscowInfo];
   },
   methods: {
     openSettings() {

@@ -5,56 +5,25 @@ import { getDewPoint } from "@/helpers/dewPoint";
 import { getWindCardinalDirection } from "@/helpers/windCardinalDirection";
 import { WeatherInfo } from "@/interfaces/WeatherInfo";
 
-export const getOpenWeatherMapResponse = (): OpenWeatherMapResponse =>
-  JSON.parse(` {
-    "coord": {
-      "lon": -2.15,
-      "lat": 57
-    },
-    "weather": [
-      {
-        "id": 804,
-        "main": "Clouds",
-        "description": "overcast clouds",
-        "icon": "04d"
-      }
-    ],
-    "base": "stations",
-    "main": {
-      "temp": 8.48,
-      "feels_like": 4.9,
-      "temp_min": 8.18,
-      "temp_max": 9.26,
-      "pressure": 1016,
-      "humidity": 79,
-      "sea_level": 1016,
-      "grnd_level": 1016
-    },
-    "visibility": 10000,
-    "wind": {
-      "speed": 7.3,
-      "deg": 189,
-      "gust": 13.48
-    },
-    "clouds": {
-      "all": 100
-    },
-    "dt": 1647347424,
-    "sys": {
-      "type": 2,
-      "id": 2031790,
-      "country": "GB",
-      "sunrise": 1647325488,
-      "sunset": 1647367827
-    },
-    "timezone": 0,
-    "id": 2641549,
-    "name": "Newtonhill",
-    "cod": 200
-  }`);
+const OPEN_WEATHER_API_KEY = process.env.VUE_APP_OPEN_WEATHER_API_KEY;
 
-export const getWeatherData = (): WeatherInfo => {
-  const openWeatherMapResponse = getOpenWeatherMapResponse();
+export const getOpenWeatherMapResponse = async (
+  lon: number,
+  lat: number
+): Promise<OpenWeatherMapResponse> => {
+  const url = getRequestUrl(lon, lat);
+  const response = await fetch(url);
+  const json = await response.json();
+
+  console.log(json);
+  return json;
+};
+
+export const getWeatherData = async (
+  lon: number,
+  lat: number
+): Promise<WeatherInfo> => {
+  const openWeatherMapResponse = await getOpenWeatherMapResponse(lon, lat);
 
   return {
     name: `${openWeatherMapResponse.name}, ${openWeatherMapResponse.sys.country}`,
@@ -86,3 +55,9 @@ export const getWeatherData = (): WeatherInfo => {
     visibility: openWeatherMapResponse.visibility,
   };
 };
+
+function getRequestUrl(lon: number, lat: number) {
+  return `https://api.openweathermap.org/data/2.5/weather?lat=${lat.toFixed(
+    5
+  )}&lon=${lon.toFixed(3)}&units=metric&appid=${OPEN_WEATHER_API_KEY}`;
+}
