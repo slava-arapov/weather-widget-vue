@@ -1,29 +1,17 @@
-import { OpenWeatherMapResponse } from "@/interfaces/OpenWeatherMapResponse";
+import { CurrentWeatherResponse } from "@/interfaces/OpenWeatherAPI/CurrentWeatherResponse";
 import { getBeaufortWindForceScaleName } from "@/helpers/beaufortWindForceScale";
 import { getCloudsConditionName } from "@/helpers/cloudsCondition";
 import { getDewPoint } from "@/helpers/dewPoint";
 import { getWindCardinalDirection } from "@/helpers/windCardinalDirection";
 import { WeatherInfo } from "@/interfaces/WeatherInfo";
+import { getWeatherByCoordinates } from "@/services/OpenWeatherAPI";
 
-const OPEN_WEATHER_API_KEY = process.env.VUE_APP_OPEN_WEATHER_API_KEY;
-
-export const getOpenWeatherMapResponse = async (
-  lon: number,
-  lat: number
-): Promise<OpenWeatherMapResponse> => {
-  const url = getRequestUrl(lon, lat);
-  const response = await fetch(url);
-  const json = await response.json();
-
-  console.log(json);
-  return json;
-};
-
-export const getWeatherData = async (
+export const getWeatherInfo = async (
   lon: number,
   lat: number
 ): Promise<WeatherInfo> => {
-  const openWeatherMapResponse = await getOpenWeatherMapResponse(lon, lat);
+  const openWeatherMapResponse: CurrentWeatherResponse =
+    await getWeatherByCoordinates(lon, lat);
 
   return {
     name: `${openWeatherMapResponse.name}, ${openWeatherMapResponse.sys.country}`,
@@ -56,8 +44,19 @@ export const getWeatherData = async (
   };
 };
 
-function getRequestUrl(lon: number, lat: number) {
-  return `https://api.openweathermap.org/data/2.5/weather?lat=${lat.toFixed(
-    5
-  )}&lon=${lon.toFixed(3)}&units=metric&appid=${OPEN_WEATHER_API_KEY}`;
-}
+export const getDefaultLocationsWeatherInfo = async function (): Promise<
+  Array<WeatherInfo>
+> {
+  // London
+  const LON_LONDON = -0.12574;
+  const LAT_LONDON = 51.50853;
+
+  // Moscow
+  const LON_MOSCOW = 37.615;
+  const LAT_MOSCOW = 55.752;
+
+  return await Promise.all([
+    getWeatherInfo(LON_LONDON, LAT_LONDON),
+    getWeatherInfo(LON_MOSCOW, LAT_MOSCOW),
+  ]);
+};

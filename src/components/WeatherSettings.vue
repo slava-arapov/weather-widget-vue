@@ -25,15 +25,7 @@
       </div>
     </div>
     <h2 class="weather-widget__title">Add Location:</h2>
-    <div class="weather-widget__add-location-form">
-      <input type="text" class="weather-widget__add-location-input" />
-      <button class="weather-widget__add-location-button">
-        <font-awesome-icon
-          :icon="faPlus"
-          class="weather-widget__add-location-button-icon"
-        />
-      </button>
-    </div>
+    <add-location @selected="(city: CityInfo) => add(city)" />
   </article>
 </template>
 
@@ -41,12 +33,9 @@
 import { defineComponent, PropType } from "vue";
 import { WeatherInfo } from "@/interfaces/WeatherInfo";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import {
-  faBars,
-  faXmark,
-  faTrashCan,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faXmark, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import AddLocation from "@/components/AddLocation.vue";
+import { CityInfo } from "@/interfaces/CityInfo";
 
 export default defineComponent({
   name: "WeatherSettings",
@@ -62,22 +51,30 @@ export default defineComponent({
 
       return false;
     },
+    // eslint-disable-next-line prettier/prettier, @typescript-eslint/no-unused-vars
+    add(city: CityInfo) {
+      return true;
+    },
   },
   data() {
     return {
       faBars,
       faXmark,
       faTrashCan,
-      faPlus,
     };
   },
   methods: {
     remove(location: WeatherInfo) {
       this.$emit("remove", location);
     },
+    add(city: CityInfo) {
+      this.$emit("add", city);
+    },
   },
+
   components: {
     FontAwesomeIcon,
+    AddLocation,
   },
 });
 </script>

@@ -8,7 +8,8 @@
     <weather-settings
       :locations="locations"
       v-show="inSettingsMode"
-      @remove="(location) => remove(location)"
+      @remove="(location: WeatherInfo) => remove(location)"
+      @add="(city: CityInfo) => add(city)"
     />
     <weather-location
       v-for="location of locations"
@@ -24,8 +25,12 @@ import { defineComponent } from "vue";
 import SettingsButton from "@/components/SettingsButton.vue";
 import WeatherLocation from "@/components/WeatherLocation.vue";
 import WeatherSettings from "@/components/WeatherSettings.vue";
-import { getWeatherData } from "@/api";
+import {
+  getDefaultLocationsWeatherInfo,
+  getWeatherInfo,
+} from "@/services/WeatherService";
 import { WeatherInfo } from "@/interfaces/WeatherInfo";
+import { CityInfo } from "@/interfaces/CityInfo";
 
 export default defineComponent({
   name: "WeatherWidget",
@@ -41,18 +46,11 @@ export default defineComponent({
     };
   },
   async mounted() {
-    // const CITY_NAME = 'London';
-    const LON_LONDON = -0.12574;
-    const LAT_LONDON = 51.50853;
 
-    // const CITY_NAME = 'Moscow';
-    const LON_MOSCOW = 37.615;
-    const LAT_MOSCOW = 55.752;
-
-    const londonInfo = await getWeatherData(LON_LONDON, LAT_LONDON);
-    const moscowInfo = await getWeatherData(LON_MOSCOW, LAT_MOSCOW);
-
-    this.locations = [...this.locations, londonInfo, moscowInfo];
+    if (this.locations.length === 0) {
+      await this.loadDefaultLocations();
+    }
+  },
   },
   methods: {
     openSettings() {
@@ -63,6 +61,21 @@ export default defineComponent({
     },
     remove(location: WeatherInfo) {
       this.locations = this.locations.filter((item) => item !== location);
+    },
+    async add(city: CityInfo) {
+      const alreadyAdded =
+        this.locations.filter((location) => location.name === city.name)
+          .length > 0;
+
+      if (alreadyAdded) return;
+
+      this.locations = [
+        ...this.locations,
+        await getWeatherInfo(city.lon, city.lat),
+      ];
+    },
+    async loadDefaultLocations() {
+      this.locations = await getDefaultLocationsWeatherInfo();
     },
   },
 });

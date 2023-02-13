@@ -35,12 +35,11 @@ $mediumIconSize: 18px;
 
 .weather-widget {
   width: 220px;
-  border: 1px solid $colorGray;
   position: relative;
 
   &__settings-button {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     position: absolute;
     top: 4px;
     right: 4px;
@@ -50,19 +49,21 @@ $mediumIconSize: 18px;
   }
 
   &__settings-button-icon {
-    width: 18px;
+    width: 16px;
   }
 
   &__card {
-    margin: 4px 4px 24px 4px;
+    border: 1px solid $colorGray;
+    padding: 4px;
+    margin-bottom: 16px;
   }
 
   &__card:last-child {
-    margin-bottom: 4px;
+    margin-bottom: 0px;
   }
 
   &__title {
-    margin: 14px 0 16px 0;
+    margin: 16px;
     font-weight: bold;
   }
 
@@ -100,7 +101,7 @@ $mediumIconSize: 18px;
   }
 
   &__detail-icon {
-    width: 18px;
+    width: 16px;
     margin-right: 4px;
   }
 
@@ -109,7 +110,7 @@ $mediumIconSize: 18px;
     align-items: center;
     justify-content: space-between;
     padding: 4px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     background-color: $colorGray;
   }
 
@@ -144,7 +145,7 @@ $mediumIconSize: 18px;
 
   &__remove-location-button {
     @include transparent-button;
-    @include centered-content();
+    @include centered-content;
     @include highlight-on-hover;
   }
 
@@ -154,6 +155,8 @@ $mediumIconSize: 18px;
 
   &__add-location-form {
     display: flex;
+    flex-direction: column;
+    position: relative;
     height: 28px;
   }
 
@@ -161,14 +164,35 @@ $mediumIconSize: 18px;
     flex-grow: 1;
   }
 
-  &__add-location-button {
-    width: 28px;
-    height: 28px;
-    @include transparent-button;
-    @include centered-content;
+  &__suggestions {
+    position: absolute;
+    border: 1px solid $colorGray;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
   }
 
-  &__add-location-button-icon {
-    width: 18px;
+  &__suggestion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid $colorGray;
+
+    &:hover {
+      background-color: $colorGray;
+    }
+  }
+
+  &__suggestion-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    opacity: 0.8;
   }
 }
