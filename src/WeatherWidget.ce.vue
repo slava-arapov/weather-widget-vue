@@ -53,8 +53,16 @@ export default defineComponent({
     this.locations = loadLocationsFromLocalStorage();
     this.refresh();
 
-    if (this.locations.length === 0) {
-      await this.loadDefaultLocations();
+    if (this.locations.length === 0 && "geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          this.locations.push(await getWeatherInfo(longitude, latitude));
+        },
+        async () => {
+          await this.loadDefaultLocations();
+        }
+      );
     }
   },
   watch: {
@@ -82,10 +90,7 @@ export default defineComponent({
 
       if (alreadyAdded) return;
 
-      this.locations = [
-        ...this.locations,
-        await getWeatherInfo(city.lon, city.lat),
-      ];
+      this.locations.push(await getWeatherInfo(city.lon, city.lat));
     },
     async loadDefaultLocations() {
       this.locations = await getDefaultLocationsWeatherInfo();
