@@ -7,6 +7,7 @@ $mediumIconSize: 22px;
 @mixin transparent-button {
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 @mixin centered-content {
@@ -191,6 +192,10 @@ $mediumIconSize: 22px;
   &__suggestion-name {
     flex-shrink: 1;
   }
+}
+
+.draggable-handle {
+  cursor: move;
 }
 
 @keyframes rotation {

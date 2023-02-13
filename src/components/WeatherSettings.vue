@@ -1,20 +1,29 @@
 <template>
   <article class="card">
     <h2 class="card__title">Settings</h2>
-    <div class="locations">
-      <div
-        v-for="location in locations"
-        :key="location.name"
-        class="locations__location"
-      >
-        <font-awesome-icon :icon="faBars" class="icon icon_small" />
-        <div class="locations__name">{{ location.name }}</div>
+    <draggable
+      v-model="draggableLocations"
+      @start="onDragStart"
+      @end="onDragEnd"
+      item-key="name"
+      class="locations"
+      handle=".draggable-handle"
+    >
+      <template #item="{ element }">
+        <div class="locations__location">
+          <font-awesome-icon
+            :icon="faBars"
+            class="icon icon_small draggable-handle"
+          />
+          <div class="locations__name">{{ element.name }}</div>
 
-        <button class="locations__remove-button" @click="remove(location)">
-          <font-awesome-icon :icon="faTrashCan" class="icon icon_small" />
-        </button>
-      </div>
-    </div>
+          <button class="locations__remove-button" @click="remove(element)">
+            <font-awesome-icon :icon="faTrashCan" class="icon icon_small" />
+          </button>
+        </div>
+      </template>
+    </draggable>
+
     <p v-if="locations.length === 0">
       No locations added. Please enter the city name in the field below.
     </p>
@@ -30,6 +39,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars, faXmark, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import AddLocation from "@/components/AddLocation.vue";
 import { CityInfo } from "@/interfaces/CityInfo";
+import draggable from "vuedraggable";
 
 export default defineComponent({
   name: "WeatherSettings",
@@ -40,18 +50,23 @@ export default defineComponent({
     },
   },
   emits: {
+    // eslint-disable-next-line prettier/prettier, @typescript-eslint/no-unused-vars
     remove(payload: WeatherInfo) {
-      if (payload) return true;
-
-      return false;
+      return true;
     },
     // eslint-disable-next-line prettier/prettier, @typescript-eslint/no-unused-vars
     add(city: CityInfo) {
       return true;
     },
+    // eslint-disable-next-line prettier/prettier, @typescript-eslint/no-unused-vars
+    reorder(locations: Array<WeatherInfo>) {
+      return true;
+    },
   },
   data() {
     return {
+      draggableLocations: [] as Array<WeatherInfo>,
+      drag: false,
       faBars,
       faXmark,
       faTrashCan,
@@ -64,9 +79,24 @@ export default defineComponent({
     add(city: CityInfo) {
       this.$emit("add", city);
     },
+    onDragStart() {
+      this.drag = true;
+    },
+    onDragEnd() {
+      this.drag = false;
+      this.$emit("reorder", this.draggableLocations);
+    },
   },
-
+  watch: {
+    locations: {
+      handler() {
+        this.draggableLocations = [...this.locations];
+      },
+      deep: true,
+    },
+  },
   components: {
+    draggable,
     FontAwesomeIcon,
     AddLocation,
   },

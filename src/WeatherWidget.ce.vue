@@ -8,8 +8,9 @@
     <weather-settings
       :locations="locations"
       v-show="inSettingsMode"
-      @remove="(location: WeatherInfo) => remove(location)"
+      @remove="(location: WeatherInfo) => handleRemove(location)"
       @add="(city: CityInfo) => handleAdd(city)"
+      @reorder="(locations: Array<WeatherInfo>) => handleReorder(locations)"
     />
     <weather-location
       v-for="location of locations"
@@ -45,13 +46,6 @@ import { CityInfo } from "@/interfaces/CityInfo";
 
 export default defineComponent({
   name: "WeatherWidget",
-  components: {
-    SettingsButton,
-    LoadingSpinner,
-    NoLocationsTip,
-    WeatherLocation,
-    WeatherSettings,
-  },
   data() {
     return {
       locations: [] as WeatherInfo[],
@@ -97,7 +91,7 @@ export default defineComponent({
     closeSettings() {
       this.inSettingsMode = false;
     },
-    remove(location: WeatherInfo) {
+    handleRemove(location: WeatherInfo) {
       this.locations = this.locations.filter((item) => item !== location);
     },
     async handleAdd(city: CityInfo) {
@@ -113,6 +107,9 @@ export default defineComponent({
 
       this.loading = false;
     },
+    handleReorder(locations: Array<WeatherInfo>) {
+      this.locations = locations;
+    },
     async loadDefaultLocations() {
       this.locations = await getDefaultLocationsWeatherInfo();
     },
@@ -124,6 +121,13 @@ export default defineComponent({
       );
       this.locations = newInfo;
     },
+  },
+  components: {
+    SettingsButton,
+    LoadingSpinner,
+    NoLocationsTip,
+    WeatherLocation,
+    WeatherSettings,
   },
 });
 </script>
