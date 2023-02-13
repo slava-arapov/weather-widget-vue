@@ -7,8 +7,6 @@ export const getCitiesInfoByLocationName = async (
 ): Promise<Array<CityInfo>> => {
   const searchResult: Array<CityResponse> = await getCitiesByLocationName(name);
 
-  console.log("searchResult", searchResult);
-
   return searchResult.map((city) => ({
     name: `${city.name}, ${city.country}`,
     lat: city.lat,

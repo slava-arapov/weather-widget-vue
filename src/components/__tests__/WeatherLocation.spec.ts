@@ -5,6 +5,8 @@ describe("WeatherLocation.vue", () => {
   it("renders props.location when passed", () => {
     const weatherInfo = {
       name: "London, UK",
+      lon: 51.5085,
+      lat: -0.12574,
       summary: "moderate rain",
       icon: `http://openweathermap.org/img/wn/10d@2x.png`,
       temperatureUnits: "℃",

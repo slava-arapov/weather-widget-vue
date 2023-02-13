@@ -1,5 +1,7 @@
 export interface WeatherInfo {
   name: string;
+  lon: number;
+  lat: number;
   summary: string;
   icon: string;
   temperatureUnits: string;

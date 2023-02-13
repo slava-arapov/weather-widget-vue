@@ -26,6 +26,10 @@ import SettingsButton from "@/components/SettingsButton.vue";
 import WeatherLocation from "@/components/WeatherLocation.vue";
 import WeatherSettings from "@/components/WeatherSettings.vue";
 import {
+  loadLocations as loadLocationsFromLocalStorage,
+  saveLocations as saveLocationsToLocalStorage,
+} from "@/services/LocalStorageService";
+import {
   getDefaultLocationsWeatherInfo,
   getWeatherInfo,
 } from "@/services/WeatherService";
@@ -46,11 +50,20 @@ export default defineComponent({
     };
   },
   async mounted() {
+    this.locations = loadLocationsFromLocalStorage();
+    this.refresh();
 
     if (this.locations.length === 0) {
       await this.loadDefaultLocations();
     }
   },
+  watch: {
+    locations: {
+      handler() {
+        saveLocationsToLocalStorage(this.locations);
+      },
+      deep: true,
+    },
   },
   methods: {
     openSettings() {
@@ -76,6 +89,14 @@ export default defineComponent({
     },
     async loadDefaultLocations() {
       this.locations = await getDefaultLocationsWeatherInfo();
+    },
+    async refresh() {
+      const newInfo = await Promise.all(
+        this.locations.map((location) =>
+          getWeatherInfo(location.lon, location.lat)
+        )
+      );
+      this.locations = newInfo;
     },
   },
 });

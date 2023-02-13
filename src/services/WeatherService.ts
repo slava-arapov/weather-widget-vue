@@ -15,6 +15,8 @@ export const getWeatherInfo = async (
 
   return {
     name: `${openWeatherMapResponse.name}, ${openWeatherMapResponse.sys.country}`,
+    lon: openWeatherMapResponse.coord.lon,
+    lat: openWeatherMapResponse.coord.lat,
     summary: `${openWeatherMapResponse.weather[0].main}, ${openWeatherMapResponse.weather[0].description}`,
     icon: `//openweathermap.org/img/wn/${openWeatherMapResponse.weather[0].icon}@2x.png`,
     temperatureUnits: "°C",
