@@ -49,6 +49,10 @@ $mediumIconSize: 22px;
   &_transparent {
     opacity: 0.8;
   }
+
+  &_rotate {
+    animation: rotation 2s infinite linear;
+  }
 }
 
 .weather-widget {
@@ -62,6 +66,17 @@ $mediumIconSize: 22px;
     @include transparent-button;
     @include centered-content;
     @include highlight-on-hover;
+  }
+
+  &__loading {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
   }
 }
 
@@ -175,5 +190,14 @@ $mediumIconSize: 22px;
 
   &__suggestion-name {
     flex-shrink: 1;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
   }
 }

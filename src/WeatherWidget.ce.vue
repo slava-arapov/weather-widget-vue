@@ -9,7 +9,7 @@
       :locations="locations"
       v-show="inSettingsMode"
       @remove="(location: WeatherInfo) => remove(location)"
-      @add="(city: CityInfo) => add(city)"
+      @add="(city: CityInfo) => handleAdd(city)"
     />
     <weather-location
       v-for="location of locations"
@@ -17,12 +17,19 @@
       :weather-info="location"
       :key="location.name"
     />
+    <no-locations-tip
+      v-if="locations.length === 0 && !inSettingsMode"
+      @open="openSettings"
+    />
+    <loading-spinner v-if="loading" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import SettingsButton from "@/components/SettingsButton.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import NoLocationsTip from "@/components/NoLocationsTip.vue";
 import WeatherLocation from "@/components/WeatherLocation.vue";
 import WeatherSettings from "@/components/WeatherSettings.vue";
 import {
@@ -40,6 +47,8 @@ export default defineComponent({
   name: "WeatherWidget",
   components: {
     SettingsButton,
+    LoadingSpinner,
+    NoLocationsTip,
     WeatherLocation,
     WeatherSettings,
   },
@@ -47,20 +56,28 @@ export default defineComponent({
     return {
       locations: [] as WeatherInfo[],
       inSettingsMode: false,
+      loading: true,
     };
   },
   async mounted() {
     this.locations = loadLocationsFromLocalStorage();
-    this.refresh();
 
-    if (this.locations.length === 0 && "geolocation" in navigator) {
+    if (this.locations.length > 0) {
+      this.refresh();
+      this.loading = false;
+      return;
+    }
+
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
           this.locations.push(await getWeatherInfo(longitude, latitude));
+          this.loading = false;
         },
         async () => {
           await this.loadDefaultLocations();
+          this.loading = false;
         }
       );
     }
@@ -83,14 +100,18 @@ export default defineComponent({
     remove(location: WeatherInfo) {
       this.locations = this.locations.filter((item) => item !== location);
     },
-    async add(city: CityInfo) {
+    async handleAdd(city: CityInfo) {
       const alreadyAdded =
         this.locations.filter((location) => location.name === city.name)
           .length > 0;
 
       if (alreadyAdded) return;
 
+      this.loading = true;
+
       this.locations.push(await getWeatherInfo(city.lon, city.lat));
+
+      this.loading = false;
     },
     async loadDefaultLocations() {
       this.locations = await getDefaultLocationsWeatherInfo();

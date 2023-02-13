@@ -15,6 +15,9 @@
         </button>
       </div>
     </div>
+    <p v-if="locations.length === 0">
+      No locations added. Please enter the city name in the field below.
+    </p>
     <h2 class="card__title">Add Location:</h2>
     <add-location @selected="(city: CityInfo) => add(city)" />
   </article>

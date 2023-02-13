@@ -7,7 +7,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faGear, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGear,
+  faXmark,
+  IconDefinition,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
   name: "SettingsButton",
@@ -22,7 +26,7 @@ export default defineComponent({
     close: null,
   },
   computed: {
-    icon() {
+    icon(): IconDefinition {
       return this.inSettingsMode ? faXmark : faGear;
     },
     action() {
