@@ -1,9 +1,6 @@
 <template>
   <button class="weather-widget__settings-button" @click="action">
-    <font-awesome-icon
-      :icon="icon"
-      class="weather-widget__settings-button-icon"
-    />
+    <font-awesome-icon :icon="icon" class="icon" />
   </button>
 </template>
 

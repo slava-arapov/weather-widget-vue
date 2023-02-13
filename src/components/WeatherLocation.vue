@@ -1,43 +1,46 @@
 <template>
-  <article class="weather-widget__card" v-if="weatherInfo">
-    <h2 class="weather-widget__title">
+  <article class="card" v-if="weatherInfo">
+    <h2 class="card__title">
       {{ weatherInfo.name }}
     </h2>
-    <div class="weather-widget__main-info">
-      <div class="weather-widget__weather-icon">
-        <img :src="weatherInfo.icon" :alt="weatherInfo.summary" />
-      </div>
-      <div class="weather-widget__temperature">
+    <div class="weather-main-info">
+      <img
+        :src="weatherInfo.icon"
+        :alt="weatherInfo.summary"
+        height="100"
+        width="100"
+      />
+      <div class="weather-main-info__temperature">
         {{ weatherInfo.temperature }}{{ weatherInfo.temperatureUnits }}
       </div>
     </div>
-    <p class="weather-widget__additional-info">
+    <p class="weather-additional-info">
       {{ feelsLikePhrase }}. {{ cloudsPhrase }}. {{ windPhrase }}.
     </p>
-    <div class="weather-widget__details">
-      <div class="weather-widget__detail">
+    <div class="weather-details">
+      <div class="weather-details__detail">
         <font-awesome-icon
           :icon="faLocationArrow"
-          class="weather-widget__detail-icon"
+          class="icon icon_small icon_before_text"
           :style="windDirectionIconStyle"
         />
         {{ weatherInfo.windSpeed }}{{ weatherInfo.speedUnits }},
         {{ weatherInfo.windCardinalDirection }}
       </div>
-      <div class="weather-widget__detail">
+      <div class="weather-details__detail">
         <font-awesome-icon
           :icon="faGaugeSimpleHigh"
-          class="weather-widget__detail-icon"
+          class="icon icon_small icon_before_text"
         />
         {{ weatherInfo.pressure }}{{ weatherInfo.pressureUnits }}
       </div>
-      <div class="weather-widget__detail">
+      <div class="weather-details__detail">
         Humidity: {{ weatherInfo.humidity }}%
       </div>
-      <div class="weather-widget__detail">
+      <div class="weather-details__detail">
         Dew point: {{ weatherInfo.dewPoint }}{{ weatherInfo.temperatureUnits }}
       </div>
-      <div class="weather-widget__detail">
+      <div class="weather-details__detail">
         Visibility: {{ formattedVisibility }}{{ weatherInfo.distanceUnits }}
       </div>
     </div>

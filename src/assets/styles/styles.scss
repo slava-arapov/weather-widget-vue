@@ -1,8 +1,8 @@
 $colorDark: hsl(0, 0%, 13%);
 $colorGray: hsl(30, 10%, 92%);
 
-$smallIconSize: 18px;
-$mediumIconSize: 18px;
+$smallIconSize: 14px;
+$mediumIconSize: 22px;
 
 @mixin transparent-button {
   background-color: transparent;
@@ -33,49 +33,57 @@ $mediumIconSize: 18px;
   color: $colorDark;
 }
 
+.icon {
+  width: $mediumIconSize;
+  height: $mediumIconSize;
+
+  &_small {
+    width: $smallIconSize;
+    height: $smallIconSize;
+  }
+
+  &_before_text {
+    margin-right: 4px;
+  }
+
+  &_transparent {
+    opacity: 0.8;
+  }
+}
+
 .weather-widget {
   width: 220px;
   position: relative;
 
   &__settings-button {
-    width: 24px;
-    height: 24px;
     position: absolute;
-    top: 4px;
-    right: 4px;
+    top: 12px;
+    right: 12px;
     @include transparent-button;
     @include centered-content;
     @include highlight-on-hover;
   }
+}
 
-  &__settings-button-icon {
-    width: 16px;
-  }
+.card {
+  border: 1px solid $colorGray;
+  padding: 8px;
+  margin-bottom: 16px;
 
-  &__card {
-    border: 1px solid $colorGray;
-    padding: 4px;
-    margin-bottom: 16px;
-  }
-
-  &__card:last-child {
+  &:last-child {
     margin-bottom: 0px;
   }
 
   &__title {
-    margin: 16px;
+    margin: 8px 0 12px;
     font-weight: bold;
   }
+}
 
-  &__main-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__weather-icon {
-    flex: 1;
-  }
+.weather-main-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &__temperature {
     flex: 1;
@@ -83,84 +91,60 @@ $mediumIconSize: 18px;
     font-size: 32px;
     font-weight: bold;
   }
+}
 
-  &__additional-info {
-    margin-bottom: 4px;
-  }
+.weather-additional-info {
+  margin-bottom: 16px;
+}
 
-  &__details {
-    display: flex;
-    flex-wrap: wrap;
-  }
+.weather-details {
+  display: flex;
+  flex-wrap: wrap;
 
   &__detail {
     display: flex;
     align-items: center;
     width: 50%;
-    padding: 8px 4px 0 0;
+    padding: 4px 4px 4px 0;
   }
+}
 
-  &__detail-icon {
-    width: 16px;
-    margin-right: 4px;
-  }
+.locations {
+  padding-bottom: 12px;
 
   &__location {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 4px;
+    padding: 8px 4px;
     margin-bottom: 8px;
+
     background-color: $colorGray;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
-  &__location:last-child {
-    margin-bottom: 0;
-  }
-
-  &__location-button {
-    width: 24px;
-    height: 24px;
-    @include transparent-button;
-    @include centered-content;
-  }
-
-  &__location-icon {
-    width: 18px;
-    margin-right: 4px;
-  }
-
-  &__location-name {
+  &__name {
     flex-grow: 1;
+    margin: 0 4px;
   }
 
-  &__location-button-icon {
-    width: 18px;
-    opacity: 0.8;
-  }
-
-  &__location-button-icon:hover {
-    opacity: 1;
-  }
-
-  &__remove-location-button {
+  &__remove-button {
     @include transparent-button;
     @include centered-content;
     @include highlight-on-hover;
   }
+}
 
-  &__remove-location-button-icon {
-    width: 14px;
-  }
+.add-location-form {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 28px;
 
-  &__add-location-form {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    height: 28px;
-  }
-
-  &__add-location-input {
+  &__input {
     flex-grow: 1;
   }
 
@@ -189,10 +173,7 @@ $mediumIconSize: 18px;
     }
   }
 
-  &__suggestion-icon {
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-    opacity: 0.8;
+  &__suggestion-name {
+    flex-shrink: 1;
   }
 }

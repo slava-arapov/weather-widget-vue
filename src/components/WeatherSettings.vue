@@ -1,30 +1,21 @@
 <template>
-  <article class="weather-widget__card">
-    <h2 class="weather-widget__title">Settings</h2>
-    <div class="weather-widget__locations">
+  <article class="card">
+    <h2 class="card__title">Settings</h2>
+    <div class="locations">
       <div
         v-for="location in locations"
         :key="location.name"
-        class="weather-widget__location"
+        class="locations__location"
       >
-        <font-awesome-icon
-          :icon="faBars"
-          class="weather-widget__location-icon"
-        />
-        <div class="weather-widget__location-name">{{ location.name }}</div>
+        <font-awesome-icon :icon="faBars" class="icon icon_small" />
+        <div class="locations__name">{{ location.name }}</div>
 
-        <button
-          class="weather-widget__remove-location-button"
-          @click="remove(location)"
-        >
-          <font-awesome-icon
-            :icon="faTrashCan"
-            class="weather-widget__remove-location-button-icon"
-          />
+        <button class="locations__remove-button" @click="remove(location)">
+          <font-awesome-icon :icon="faTrashCan" class="icon icon_small" />
         </button>
       </div>
     </div>
-    <h2 class="weather-widget__title">Add Location:</h2>
+    <h2 class="card__title">Add Location:</h2>
     <add-location @selected="(city: CityInfo) => add(city)" />
   </article>
 </template>

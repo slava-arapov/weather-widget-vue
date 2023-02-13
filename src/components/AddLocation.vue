@@ -1,22 +1,24 @@
 <template>
-  <div class="weather-widget__add-location-form">
+  <div class="add-location-form">
     <input
       type="search"
-      class="weather-widget__add-location-input"
+      class="add-location-form__input"
       v-model="locationName"
       @input="getTipsDebounced"
     />
-    <ul class="weather-widget__suggestions">
+    <ul class="add-location-form__suggestions">
       <li
-        class="weather-widget__suggestion"
+        class="add-location-form__suggestion"
         v-for="(locationTip, index) in locationSuggestions"
         :key="index"
         @click="addLocation(locationTip)"
       >
-        {{ locationTip.name }}
+        <div class="add-location-form__suggestion-name">
+          {{ locationTip.name }}
+        </div>
         <font-awesome-icon
           :icon="faPlus"
-          class="weather-widget__suggestion-icon"
+          class="icon icon_small icon_transparent"
         />
       </li>
     </ul>
@@ -62,7 +64,6 @@ const component: ExtendedComponentOptions = {
       );
     },
     addLocation(selectedCity: CityInfo) {
-      console.log("selectedCity", selectedCity);
       this.$emit("selected", selectedCity);
       this.locationName = "";
       this.locationSuggestions = [];
