@@ -15,10 +15,11 @@
     cp .env.example .env.local
    ```
 
-1. Edit your .env.local file. Make sure your [OpenWeather API key](https://home.openweathermap.org/api_keys) added
+1. Edit your .env.local file. Make sure your [OpenWeather API key](https://home.openweathermap.org/api_keys) and public path (optional, for icons absolute URLs) added
 
    ```dotenv
    OPEN_WEATHER_API_KEY=
+   PUBLIC_PATH=https://example.com/
    ```
 
 1. Install dependencies

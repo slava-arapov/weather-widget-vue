@@ -38,6 +38,7 @@ jobs:
         run: |
           touch .env.local
           echo VUE_APP_OPEN_WEATHER_API_KEY=${{ secrets.VUE_APP_OPEN_WEATHER_API_KEY }} >> .env.local
+          echo PUBLIC_PATH=${{ vars.PUBLIC_PATH }} >> .env.local
 
       - name: Build
         run: npm run build
