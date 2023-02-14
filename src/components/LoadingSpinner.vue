@@ -1,17 +1,22 @@
 <template>
   <div class="weather-widget__loading">
-    <font-awesome-icon :icon="icon" class="icon icon_rotate" />
+    <img
+      src="@fortawesome/fontawesome-free/svgs/solid/sun.svg"
+      class="icon icon_rotate"
+      alt="Sun spinning"
+      v-if="isDayTime"
+    />
+    <img
+      src="@fortawesome/fontawesome-free/svgs/solid/star.svg"
+      class="icon icon_rotate"
+      alt="Star spinning"
+      v-else
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import {
-  faSun,
-  faStar,
-  IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
   name: "LoadingSpinner",
@@ -20,18 +25,10 @@ export default defineComponent({
       isDayTime: true,
     };
   },
-  computed: {
-    icon(): IconDefinition {
-      return this.isDayTime ? faSun : faStar;
-    },
-  },
   mounted() {
     const hours = new Date().getHours();
 
     this.isDayTime = hours > 6 && hours < 20;
-  },
-  components: {
-    FontAwesomeIcon,
   },
 });
 </script>

@@ -19,18 +19,20 @@
     </p>
     <div class="weather-details">
       <div class="weather-details__detail">
-        <font-awesome-icon
-          :icon="faLocationArrow"
+        <img
+          src="@fortawesome/fontawesome-free/svgs/solid/location-arrow.svg"
           class="icon icon_small icon_before_text"
           :style="windDirectionIconStyle"
+          alt="Wind direction arrow"
         />
         {{ weatherInfo.windSpeed }}{{ weatherInfo.speedUnits }},
         {{ weatherInfo.windCardinalDirection }}
       </div>
       <div class="weather-details__detail">
-        <font-awesome-icon
-          :icon="faGaugeSimpleHigh"
+        <img
+          src="@fortawesome/fontawesome-free/svgs/solid/gauge-simple-high.svg"
           class="icon icon_small icon_before_text"
+          alt="Pressure"
         />
         {{ weatherInfo.pressure }}{{ weatherInfo.pressureUnits }}
       </div>
@@ -50,12 +52,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { WeatherInfo } from "@/interfaces/WeatherInfo";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import {
-  faGaugeSimpleHigh,
-  faGear,
-  faLocationArrow,
-} from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
   name: "WeatherLocation",
@@ -64,13 +60,6 @@ export default defineComponent({
       type: Object as PropType<WeatherInfo>,
       required: true,
     },
-  },
-  data() {
-    return {
-      faGaugeSimpleHigh,
-      faLocationArrow,
-      faGear,
-    };
   },
   computed: {
     feelsLikePhrase() {
@@ -95,9 +84,6 @@ export default defineComponent({
     formattedVisibility() {
       return (this.weatherInfo.visibility / 1000).toFixed(1);
     },
-  },
-  components: {
-    FontAwesomeIcon,
   },
 });
 

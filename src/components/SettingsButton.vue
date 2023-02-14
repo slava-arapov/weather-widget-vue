@@ -1,17 +1,22 @@
 <template>
   <button class="weather-widget__settings-button" @click="action">
-    <font-awesome-icon :icon="icon" class="icon" />
+    <img
+      src="@fortawesome/fontawesome-free/svgs/solid/xmark.svg"
+      class="icon"
+      alt="Close Settings"
+      v-if="inSettingsMode"
+    />
+    <img
+      src="@fortawesome/fontawesome-free/svgs/solid/gear.svg"
+      class="icon"
+      alt="Open Settings"
+      v-else
+    />
   </button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import {
-  faGear,
-  faXmark,
-  IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
   name: "SettingsButton",
@@ -26,9 +31,6 @@ export default defineComponent({
     close: null,
   },
   computed: {
-    icon(): IconDefinition {
-      return this.inSettingsMode ? faXmark : faGear;
-    },
     action() {
       return this.inSettingsMode ? this.close : this.open;
     },
@@ -40,9 +42,6 @@ export default defineComponent({
     close() {
       this.$emit("close");
     },
-  },
-  components: {
-    FontAwesomeIcon,
   },
 });
 </script>

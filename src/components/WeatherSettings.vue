@@ -11,14 +11,20 @@
     >
       <template #item="{ element }">
         <div class="locations__location">
-          <font-awesome-icon
-            :icon="faBars"
+          <img
+            src="@fortawesome/fontawesome-free/svgs/solid/bars.svg"
             class="icon icon_small draggable-handle"
+            alt="Close Settings"
           />
+
           <div class="locations__name">{{ element.name }}</div>
 
           <button class="locations__remove-button" @click="remove(element)">
-            <font-awesome-icon :icon="faTrashCan" class="icon icon_small" />
+            <img
+              src="@fortawesome/fontawesome-free/svgs/solid/trash-can.svg"
+              class="icon icon_small"
+              alt="Close Settings"
+            />
           </button>
         </div>
       </template>
@@ -35,8 +41,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { WeatherInfo } from "@/interfaces/WeatherInfo";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faBars, faXmark, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import AddLocation from "@/components/AddLocation.vue";
 import { CityInfo } from "@/interfaces/CityInfo";
 import draggable from "vuedraggable";
@@ -67,9 +71,6 @@ export default defineComponent({
     return {
       draggableLocations: [] as Array<WeatherInfo>,
       drag: false,
-      faBars,
-      faXmark,
-      faTrashCan,
     };
   },
   methods: {
@@ -97,7 +98,6 @@ export default defineComponent({
   },
   components: {
     draggable,
-    FontAwesomeIcon,
     AddLocation,
   },
 });

@@ -16,9 +16,10 @@
         <div class="add-location-form__suggestion-name">
           {{ locationTip.name }}
         </div>
-        <font-awesome-icon
-          :icon="faPlus"
+        <img
+          src="@fortawesome/fontawesome-free/svgs/solid/plus.svg"
           class="icon icon_small icon_transparent"
+          alt="Add"
         />
       </li>
     </ul>
@@ -29,8 +30,6 @@
 import { ComponentOptions, defineComponent } from "vue";
 import { getCitiesInfoByLocationName } from "@/services/GeocodingService";
 import { debounce } from "@/helpers/helpers";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CityInfo } from "@/interfaces/CityInfo";
 
 interface ExtendedComponentOptions extends ComponentOptions {
@@ -43,7 +42,6 @@ const component: ExtendedComponentOptions = {
     return {
       locationName: "" as string,
       locationSuggestions: [] as Array<CityInfo>,
-      faPlus,
     };
   },
   emits: {
@@ -74,10 +72,6 @@ const component: ExtendedComponentOptions = {
   },
   beforeUnmount() {
     delete this.getTipsDebounced;
-  },
-
-  components: {
-    FontAwesomeIcon,
   },
 };
 
