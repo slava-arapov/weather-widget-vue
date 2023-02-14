@@ -28,5 +28,5 @@ function getWeatherByCoordinatesRequestUrl(lon: number, lat: number) {
 }
 
 function getCitiesByLocationNameRequestUrl(cityName: string, limit = 4) {
-  return `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${limit}&appid=${OPEN_WEATHER_API_KEY}`;
+  return `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${limit}&appid=${OPEN_WEATHER_API_KEY}`;
 }
