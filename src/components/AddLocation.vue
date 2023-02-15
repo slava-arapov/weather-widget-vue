@@ -49,6 +49,10 @@ const component: ExtendedComponentOptions = {
     selected(city: CityInfo) {
       return true;
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    error(e: string) {
+      return true;
+    },
   },
   methods: {
     async getTips() {
@@ -57,9 +61,13 @@ const component: ExtendedComponentOptions = {
         return;
       }
 
-      this.locationSuggestions = await getCitiesInfoByLocationName(
-        this.locationName
-      );
+      try {
+        this.locationSuggestions = await getCitiesInfoByLocationName(
+          this.locationName
+        );
+      } catch (e) {
+        this.$emit("error", "Failed to fetch locations");
+      }
     },
     addLocation(selectedCity: CityInfo) {
       this.$emit("selected", selectedCity);

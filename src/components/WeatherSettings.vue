@@ -34,7 +34,10 @@
       No locations added. Please enter the city name in the field below.
     </p>
     <h2 class="card__title">Add Location:</h2>
-    <add-location @selected="(city: CityInfo) => add(city)" />
+    <add-location
+      @selected="(city: CityInfo) => add(city)"
+      @error="(e: string) => error(e)"
+    />
   </article>
 </template>
 
@@ -63,6 +66,10 @@ export default defineComponent({
       return true;
     },
     // eslint-disable-next-line prettier/prettier, @typescript-eslint/no-unused-vars
+    error(e: string) {
+      return true;
+    },
+    // eslint-disable-next-line prettier/prettier, @typescript-eslint/no-unused-vars
     reorder(locations: Array<WeatherInfo>) {
       return true;
     },
@@ -79,6 +86,9 @@ export default defineComponent({
     },
     add(city: CityInfo) {
       this.$emit("add", city);
+    },
+    error(e: string) {
+      this.$emit("error", e);
     },
     onDragStart() {
       this.drag = true;

@@ -5,24 +5,33 @@
       @close="closeSettings"
       @open="openSettings"
     />
+
     <weather-settings
       :locations="locations"
       v-show="inSettingsMode"
       @remove="(location: WeatherInfo) => handleRemove(location)"
       @add="(city: CityInfo) => handleAdd(city)"
       @reorder="(locations: Array<WeatherInfo>) => handleReorder(locations)"
+      @error="(e: string) => displayError(e)"
     />
+
     <weather-location
       v-for="location of locations"
       v-show="!inSettingsMode"
       :weather-info="location"
       :key="location.name"
     />
+
     <no-locations-tip
       v-if="locations.length === 0 && !inSettingsMode"
       @open="openSettings"
     />
+
     <loading-spinner v-if="loading" />
+
+    <div class="weather-widget__error" v-if="error" @click="error = ''">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -51,6 +60,7 @@ export default defineComponent({
       locations: [] as WeatherInfo[],
       inSettingsMode: false,
       loading: true,
+      error: "",
     };
   },
   async mounted() {
@@ -70,6 +80,7 @@ export default defineComponent({
           this.loading = false;
         },
         async () => {
+          this.displayError("Failed to get your current location");
           await this.loadDefaultLocations();
           this.loading = false;
         }
@@ -99,11 +110,18 @@ export default defineComponent({
         this.locations.filter((location) => location.name === city.name)
           .length > 0;
 
-      if (alreadyAdded) return;
+      if (alreadyAdded) {
+        this.displayError("Already in list");
+        return;
+      }
 
       this.loading = true;
 
-      this.locations.push(await getWeatherInfo(city.lon, city.lat));
+      try {
+        this.locations.push(await getWeatherInfo(city.lon, city.lat));
+      } catch (e) {
+        this.displayError("Failed to get weather");
+      }
 
       this.loading = false;
     },
@@ -111,15 +129,27 @@ export default defineComponent({
       this.locations = locations;
     },
     async loadDefaultLocations() {
-      this.locations = await getDefaultLocationsWeatherInfo();
+      try {
+        this.locations = await getDefaultLocationsWeatherInfo();
+      } catch (e) {
+        this.displayError("Failed to get weather");
+      }
     },
     async refresh() {
-      const newInfo = await Promise.all(
-        this.locations.map((location) =>
-          getWeatherInfo(location.lon, location.lat)
-        )
-      );
-      this.locations = newInfo;
+      try {
+        const newInfo = await Promise.all(
+          this.locations.map((location) =>
+            getWeatherInfo(location.lon, location.lat)
+          )
+        );
+        this.locations = newInfo;
+      } catch (e) {
+        this.displayError("Failed to get weather");
+      }
+    },
+    displayError(error: string) {
+      this.error = error;
+      setTimeout(() => (this.error = ""), 5000);
     },
   },
   components: {

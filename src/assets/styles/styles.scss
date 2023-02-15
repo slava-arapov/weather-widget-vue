@@ -4,6 +4,9 @@ $colorGray: hsl(30, 10%, 92%);
 $smallIconSize: 14px;
 $mediumIconSize: 22px;
 
+$smallBorderRadius: 4px;
+$mediumBorderRadius: 4px;
+
 @mixin transparent-button {
   background-color: transparent;
   border: none;
@@ -79,12 +82,23 @@ $mediumIconSize: 22px;
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.5);
   }
+
+  &__error {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    padding: 8px;
+    background-color: $colorGray;
+    border-radius: $smallBorderRadius;
+  }
 }
 
 .card {
   border: 1px solid $colorGray;
   padding: 8px;
   margin-bottom: 16px;
+  border-radius: $mediumBorderRadius;
 
   &:last-child {
     margin-bottom: 0px;
@@ -134,8 +148,8 @@ $mediumIconSize: 22px;
     justify-content: space-between;
     padding: 8px 4px;
     margin-bottom: 8px;
-
     background-color: $colorGray;
+    border-radius: $smallBorderRadius;
 
     &:last-child {
       margin-bottom: 0;
@@ -162,6 +176,8 @@ $mediumIconSize: 22px;
 
   &__input {
     flex-grow: 1;
+    border: 1px solid black;
+    border-radius: $smallBorderRadius;
   }
 
   &__suggestions {
