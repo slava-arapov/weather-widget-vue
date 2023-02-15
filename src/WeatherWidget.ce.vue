@@ -171,6 +171,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/fonts.scss";
 @import "@/assets/styles/styles.scss";
 </style>
