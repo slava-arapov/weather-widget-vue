@@ -1,5 +1,5 @@
 <template>
-  <article class="card" v-if="weatherInfo">
+  <article class="card">
     <h2 class="card__title">
       {{ weatherInfo.name }}
     </h2>

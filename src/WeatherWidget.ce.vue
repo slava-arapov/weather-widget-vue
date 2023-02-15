@@ -53,18 +53,26 @@ import {
 import { WeatherInfo } from "@/interfaces/WeatherInfo";
 import { CityInfo } from "@/interfaces/CityInfo";
 
+const WEATHER_REFRESH_INTERVAL_DELAY = 10 * 60 * 1000;
+
 export default defineComponent({
   name: "WeatherWidget",
   data() {
     return {
       locations: [] as WeatherInfo[],
       inSettingsMode: false,
+      refreshTimerId: null as ReturnType<typeof setInterval> | null,
       loading: true,
       error: "",
     };
   },
   async mounted() {
     this.locations = loadLocationsFromLocalStorage();
+
+    this.refreshTimerId = setInterval(
+      this.refresh,
+      WEATHER_REFRESH_INTERVAL_DELAY
+    );
 
     if (this.locations.length > 0) {
       this.refresh();
